@@ -2,7 +2,7 @@ Official Rust Client for [Elasticsearch](https://github.com/elastic/elasticsearc
 
 Full documentation is available at https://docs.rs/elasticsearch
 
-The project is still very much a _work in progress_ and in an _alpha_ state; 
+The project is still very much a _work in progress_ and in an _alpha_ state;
 input and contributions welcome!
 
 ## Versions and Compatibility
@@ -45,7 +45,7 @@ that is compatible with the version of Elasticsearch you're using
 
 ```toml
 [dependencies]
-elasticsearch = "7.5.2-alpha1"
+elasticsearch = "7.5.2-alpha.1"
 ```
 
 The following _optional_ dependencies may also be useful to create requests and read responses
@@ -57,7 +57,7 @@ serde_json = "~1"
 
 ### Create a client
 
-Build a transport to make API requests to Elasticsearch using the `TransportBuilder`, 
+Build a transport to make API requests to Elasticsearch using the `TransportBuilder`,
 which allows setting of proxies and authentication schemes
 
  To create a client to make API calls to Elasticsearch running on `http://localhost:9200`
@@ -73,7 +73,7 @@ Alternatively, you can create a client to make API calls against Elasticsearch r
 
 ```rust,no_run
 use elasticsearch::{
-    Error, Elasticsearch, 
+    Error, Elasticsearch,
     http::transport::{Transport, SingleNodeConnectionPool}
 };
 
@@ -91,7 +91,7 @@ fn run() -> Result<(), Error> {
 ```rust,no_run
 use elasticsearch::{
     auth::Credentials,
-    Error, Elasticsearch, 
+    Error, Elasticsearch,
     http::transport::Transport,
 };
 use url::Url;
@@ -112,7 +112,7 @@ fn run() -> Result<(), Error> {
 ```rust,no_run
 use elasticsearch::{
     auth::Credentials,
-    Error, Elasticsearch, 
+    Error, Elasticsearch,
     http::transport::{TransportBuilder,SingleNodeConnectionPool},
 };
 use url::Url;
@@ -138,7 +138,7 @@ use serde_json::{json, Value};
 async fn run() -> Result<(), Error> {
 
     let client = Elasticsearch::default();
-    
+
     // make a search API call
     let search_response = client
         .search(SearchParts::None)
@@ -150,14 +150,14 @@ async fn run() -> Result<(), Error> {
         .allow_no_indices(true)
         .send()
         .await?;
-    
+
     // get the HTTP response status code
     let status_code = search_response.status_code();
-    
+
     // read the response body. Consumes search_response
-    let response_body = search_response.read_body::<Value>().await?; 
-    
-    // read fields from the response body         
+    let response_body = search_response.read_body::<Value>().await?;
+
+    // read fields from the response body
     let took = response_body["took"].as_i64().unwrap();
 
     Ok(())
